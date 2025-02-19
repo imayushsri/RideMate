@@ -1,6 +1,6 @@
 # Backend API Documentation
-
-## Endpoint
+## User Routes
+### Endpoint
 
 `/users/register`
 
@@ -208,5 +208,94 @@ Logs out the authenticated user.
     ```json
     {
       "message": "Unauthorized"
+    }
+    ```
+## Captain Routes
+### Endpoint
+
+`/captains/register`
+
+#### HTTP Method
+`POST`
+
+#### Description
+Registers a new captain.
+
+#### Request Body
+- `fullname` (object)
+  - `firstname` (string, required): First name of the captain. Must be at least 3 characters long.
+  - `lastname` (string, required): Last name of the captain. Must be at least 3 characters long.
+- `email` (string, required): Email of the captain. Must be a valid email address.
+- `password` (string, required): Password of the captain. Must be at least 5 characters long.
+- `vehicle` (object)
+  - `color` (string, required): Color of the vehicle. Must be at least 3 characters long.
+  - `plate` (string, required): Plate number of the vehicle. Must be at least 3 characters long.
+  - `capacity` (integer, required): Capacity of the vehicle. Must be at least 1.
+  - `vehicleType` (string, required): Type of the vehicle. Must be one of 'car', 'motorcycle', 'auto'.
+
+#### Responses
+
+- **201 Created**
+  - **Description**: Captain successfully registered.
+  - **Body**: 
+    ```json
+    {
+      "captain": {
+        "_id": "Captain ID",
+        "fullname": {
+          "firstname": "First name",
+          "lastname": "Last name"
+        },
+        "email": "Captain email",
+        "vehicle": {
+          "color": "Vehicle color",
+          "plate": "Vehicle plate",
+          "capacity": "Vehicle capacity",
+          "vehicleType": "Vehicle type"
+        }
+      }
+    }
+    ```
+  - **Example**:
+    ```json
+    {
+      "captain": {
+        "_id": "60d0fe4f5311236168a109ca",
+        "fullname": {
+          "firstname": "John",
+          "lastname": "Doe"
+        },
+        "email": "john.doe@example.com",
+        "vehicle": {
+          "color": "Red",
+          "plate": "ABC123",
+          "capacity": 4,
+          "vehicleType": "car"
+        }
+      }
+    }
+    ```
+
+- **400 Bad Request**
+  - **Description**: Validation error or missing required fields.
+  - **Body**: 
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "Error message",
+          "param": "Field name",
+          "location": "body"
+        }
+      ]
+    }
+    ```
+
+- **400 Bad Request**
+  - **Description**: Captain already exists.
+  - **Body**: 
+    ```json
+    {
+      "error": "Captain already exists"
     }
     ```
