@@ -1,8 +1,8 @@
 # Backend API Documentation
 
-## Endpoints
+## Endpoint
 
-`POST /users/register`
+`/users/register`
 
 
 ### HTTP Method
@@ -66,13 +66,11 @@ Registers a new user.
     }
     ```
 
-### POST /users/login
+### Endpoint
+`/users/login`
 
-#### Request Method
-- **POST**
-
-#### Endpoint
-- **/users/login**
+#### HTTP Request Method
+`POST`
 
 #### Description
 Logs in an existing user.
@@ -137,13 +135,11 @@ Logs in an existing user.
       ]
     }
 
-### GET /users/profile
+### Endpoint
+`/users/profile`
 
-#### Request Method
-- **GET**
-
-#### Endpoint
-- **/users/profile**
+#### HTTP Request Method
+`GET`
 
 #### Description
 Fetches the profile of the authenticated user.
@@ -183,14 +179,11 @@ Fetches the profile of the authenticated user.
       "message": "Unauthorized"
     }
     ```
+### Endpoint
+`/users/logout`
 
-### GET /users/logout
-
-#### Request Method
-- **GET**
-
-#### Endpoint
-- **/users/logout**
+#### HTTP Request Method
+`GET`
 
 #### Description
 Logs out the authenticated user.
