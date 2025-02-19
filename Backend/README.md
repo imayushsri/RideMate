@@ -67,6 +67,7 @@ Registers a new user.
     ```
 
 ### Endpoint
+
 `/users/login`
 
 #### HTTP Request Method
@@ -136,6 +137,7 @@ Logs in an existing user.
     }
 
 ### Endpoint
+
 `/users/profile`
 
 #### HTTP Request Method
@@ -180,6 +182,7 @@ Fetches the profile of the authenticated user.
     }
     ```
 ### Endpoint
+
 `/users/logout`
 
 #### HTTP Request Method
