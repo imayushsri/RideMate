@@ -299,3 +299,153 @@ Registers a new captain.
       "error": "Captain already exists"
     }
     ```
+    ### Endpoint
+
+`/captains/login`
+
+#### HTTP Method
+`POST`
+
+#### Description
+Logs in an existing captain.
+
+#### Request Body
+- `email` (string, required): Email of the captain. Must be a valid email address.
+- `password` (string, required): Password of the captain. Must be at least 6 characters long.
+
+#### Responses
+
+- **200 OK**
+  - **Description**: Captain successfully logged in.
+  - **Body**: 
+    ```json
+    {
+      "token": "JWT token",
+      "captain": {
+        "_id": "Captain ID",
+        "fullname": {
+          "firstname": "First name",
+          "lastname": "Last name"
+        },
+        "email": "Captain email"
+      }
+    }
+    ```
+  - **Example**:
+    ```json
+    {
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+      "captain": {
+        "_id": "60d0fe4f5311236168a109ca",
+        "fullname": {
+          "firstname": "John",
+          "lastname": "Doe"
+        },
+        "email": "john.doe@example.com"
+      }
+    }
+    ```
+
+- **401 Unauthorized**
+  - **Description**: Invalid email or password.
+  - **Body**: 
+    ```json
+    {
+      "message": "Invalid email or password"
+    }
+    ```
+
+- **400 Bad Request**
+  - **Description**: Validation error or missing required fields.
+  - **Body**: 
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "Error message",
+          "param": "Field name",
+          "location": "body"
+        }
+      ]
+    }
+    ```
+
+### Endpoint
+
+`/captains/profile`
+
+#### HTTP Method
+`GET`
+
+#### Description
+Fetches the profile of the authenticated captain.
+
+#### Responses
+
+- **200 OK**
+  - **Description**: Captain profile fetched successfully.
+  - **Body**: 
+    ```json
+    {
+      "captain": {
+        "_id": "Captain ID",
+        "fullname": {
+          "firstname": "First name",
+          "lastname": "Last name"
+        },
+        "email": "Captain email"
+      }
+    }
+    ```
+  - **Example**:
+    ```json
+    {
+      "captain": {
+        "_id": "60d0fe4f5311236168a109ca",
+        "fullname": {
+          "firstname": "John",
+          "lastname": "Doe"
+        },
+        "email": "john.doe@example.com"
+      }
+    }
+    ```
+
+- **401 Unauthorized**
+  - **Description**: Captain is not authenticated.
+  - **Body**: 
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
+
+### Endpoint
+
+`/captains/logout`
+
+#### HTTP Method
+`GET`
+
+#### Description
+Logs out the authenticated captain.
+
+#### Responses
+
+- **200 OK**
+  - **Description**: Captain successfully logged out.
+  - **Body**: 
+    ```json
+    {
+      "message": "Logged Out"
+    }
+    ```
+
+- **401 Unauthorized**
+  - **Description**: Captain is not authenticated.
+  - **Body**: 
+    ```json
+    {
+      "message": "Unauthorized"
+    }
+    ```
