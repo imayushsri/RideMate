@@ -8,6 +8,7 @@ app.use(cookieParser());
 const connectToDb = require('./db/db');
 const userRoutes = require('./routes/user.routes');
 const captainRoutes = require('./routes/captain.routes');
+const mapsRoutes = require('./routes/maps.routes');
 
 connectToDb();
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({extended: true}));
 
 app.use('/users', userRoutes);
 app.use('/captains', captainRoutes);
+app.use('/maps', mapsRoutes);
 
 
 
