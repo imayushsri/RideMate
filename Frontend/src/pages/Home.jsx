@@ -7,6 +7,7 @@ import VehiclePanel from '../components/VehiclePanel';
 import ConfirmRide from '../components/ConfirmRide';
 import LookingForDriver from '../components/LookingForDriver';
 import WaitingForDriver from '../components/WaitingForDriver';
+import axios from 'axios';
 
 const Home = () => {
   const [pickup, setPickup] = useState('');
@@ -22,10 +23,52 @@ const Home = () => {
   const [confirmRidePanel, setConfirmRidePanel] = useState(false);
   const [vehicleFound, setVehicleFound] = useState(false);
   const [waitingForDriver, setWaitingForDriver] = useState(false);
+  const [pickupSuggestions, setPickupSuggestions] = useState([]);
+  const [destinationSuggestions, setDestinationSuggestions] = useState([]);
+  const [activeField, setActiveField] = useState(null);
 
+
+  const handlePickupChange = async (e) => {
+    setPickup(e.target.value);
+    try{
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, {
+      params: {input: e.target.value},
+    headers:{
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+    });
+    if (Array.isArray(response.data)) {
+      setPickupSuggestions(response.data);
+  } else {
+      setPickupSuggestions([]); // Handle unexpected response structure
+  }
+    } catch (error) {
+      console.error('Error fetching suggestions:', error);
+    }
+  }
+
+  const handleDestinationChange = async (e) => {
+    setDestination(e.target.value);
+    try{
+      const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-suggestions`, {
+      params: {input: e.target.value},
+    headers:{
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+    });
+    setDestinationSuggestions(response.data);
+    } catch (error) {
+      console.error('Error fetching suggestions:', error);
+    }
+  }
   const submitHandler = (e) => {
     e.preventDefault();
   }
+
+  async function findTrip() {
+    setVehiclePanel(true)
+    setPanelOpen(false)
+};
 
   useGSAP(() => {
     if (panelRef.current) {
@@ -102,7 +145,7 @@ const Home = () => {
         <img className='h-full w-full object-cover' src="Images/Homemap.gif" alt="" />
       </div>
       <div className='flex flex-col justify-end h-screen top-0 absolute w-full'>
-        <div className='h-[30%] p-6 bg-white relative'>
+        <div className='h-[40%] p-6 bg-white relative'>
           <h5 className='absolute top-6 right-6 text-2xl opacity-0'
           ref={panelCloseRef}
           onClick={()=>{
@@ -115,35 +158,43 @@ const Home = () => {
           <form onSubmit={(e) => {
             submitHandler(e);
           }}>
-            <div className="line absolute h-16 w-1 top-[46%] left-10 bg-gray-900 rounded-full"></div>
+            <div className="line absolute h-16 w-1 top-[35%] left-10 bg-gray-900 rounded-full"></div>
             <input
               className='bg-[#eee] px-12 py-2 text-lg rounded-lg w-full mt-5'
               type="text" placeholder='Add a pick-up location'
               value={pickup}
-              onChange={(e) => {
-                setPickup(e.target.value)
-              }}
+              onChange={handlePickupChange}
               onClick={() => {
                 setPanelOpen(true);
+                setActiveField('pickup');
               }}
             />
             <input
               className='bg-[#eee] px-12 py-2 text-lg rounded-lg w-full mt-3'
               type="text" placeholder='Enter your destination'
               value={destination}
-              onChange={(e) => {
-                setDestination(e.target.value)
-              }}
+              onChange={handleDestinationChange}
               onClick={() => {
                 setPanelOpen(true);
+                setActiveField('destination');
               }}
             />
           </form>
+          <button
+          onClick={findTrip}
+          className='w-full bg-green-600 text-white py-2 rounded-lg my-5'>Find Trip</button>
         </div>
 
         {/* Location Panel */}
         <div ref={panelRef} className='h-0 bg-white opacity-0 overflow-hidden pb-5'>
-              <LocationSearchPanel setVehiclePanel={setVehiclePanel} setPanelOpen={setPanelOpen}/>
+              <LocationSearchPanel 
+              setVehiclePanel={setVehiclePanel} 
+              setPanelOpen={setPanelOpen} 
+              activeField={activeField} 
+              suggestions={activeField === 'pickup' ? pickupSuggestions : destinationSuggestions}
+              setDestination={setDestination}
+              setPickup={setPickup}
+              />
         </div>
       </div>
 

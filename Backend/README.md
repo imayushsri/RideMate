@@ -449,3 +449,286 @@ Logs out the authenticated captain.
       "message": "Unauthorized"
     }
     ```
+## Ride Routes
+
+### Endpoint
+
+`/rides/create`
+
+#### HTTP Method
+
+`POST`
+
+#### Description
+
+Creates a new ride.
+
+#### Request Body
+
+- `pickup` (string, required): Pickup location of the ride. Must be at least 3 characters long.
+- `destination` (string, required): Destination location of the ride. Must be at least 3 characters long.
+- `vehicleType` (string, required): Type of the vehicle. Must be one of 'car', 'moto', 'auto'.
+
+#### Responses
+
+- **200 OK**
+  - **Description**: Ride successfully created.
+  - **Body**:
+    ```json
+    {
+      "ride": {
+        "_id": "Ride ID",
+        "userId": "User ID",
+        "pickup": "Pickup location",
+        "destination": "Destination location",
+        "fare": "Fare amount",
+        "otp": "OTP for the ride"
+      }
+    }
+    ```
+  - **Example**:
+    ```json
+    {
+      "ride": {
+        "_id": "60d0fe4f5311236168a109ca",
+        "userId": "60d0fe4f5311236168a109ca",
+        "pickup": "123 Main St",
+        "destination": "456 Elm St",
+        "fare": 25.50,
+        "otp": "1234"
+      }
+    }
+    ```
+
+- **400 Bad Request**
+  - **Description**: Validation error or missing required fields.
+  - **Body**:
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "Error message",
+          "param": "Field name",
+          "location": "body"
+        }
+      ]
+    }
+    ```
+
+### Endpoint
+
+`/rides/get-fare`
+
+#### HTTP Method
+
+`GET`
+
+#### Description
+
+Gets the fare for a ride between two locations.
+
+#### Request Query Parameters
+
+- `pickup` (string, required): Pickup location of the ride. Must be at least 3 characters long.
+- `destination` (string, required): Destination location of the ride. Must be at least 3 characters long.
+
+#### Responses
+
+- **200 OK**
+  - **Description**: Fare successfully calculated.
+  - **Body**:
+    ```json
+    {
+      "fare": {
+        "auto": "Fare for auto",
+        "car": "Fare for car",
+        "moto": "Fare for moto"
+      }
+    }
+    ```
+  - **Example**:
+    ```json
+    {
+      "fare": {
+        "auto": 15.00,
+        "car": 25.50,
+        "moto": 10.00
+      }
+    }
+    ```
+
+- **400 Bad Request**
+  - **Description**: Validation error or missing required fields.
+  - **Body**:
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "Error message",
+          "param": "Field name",
+          "location": "query"
+        }
+      ]
+    }
+    ```
+
+## Map Routes
+
+### Endpoint
+
+`/maps/get-coordinate`
+
+#### HTTP Method
+
+`GET`
+
+#### Description
+
+Gets the coordinates for a given address.
+
+#### Request Query Parameters
+
+- `address` (string, required): The address to get coordinates for. Must be at least 3 characters long.
+
+#### Responses
+
+- **200 OK**
+  - **Description**: Coordinates successfully fetched.
+  - **Body**:
+    ```json
+    {
+      "ltd": "Latitude",
+      "lng": "Longitude"
+    }
+    ```
+  - **Example**:
+    ```json
+    {
+      "ltd": 37.7749,
+      "lng": -122.4194
+    }
+    ```
+
+- **400 Bad Request**
+  - **Description**: Validation error or missing required fields.
+  - **Body**:
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "Error message",
+          "param": "Field name",
+          "location": "query"
+        }
+      ]
+    }
+    ```
+
+### Endpoint
+
+`/maps/get-distance-time`
+
+#### HTTP Method
+
+`GET`
+
+#### Description
+
+Gets the distance and time between two locations.
+
+#### Request Query Parameters
+
+- `origin` (string, required): The starting location. Must be at least 3 characters long.
+- `destination` (string, required): The destination location. Must be at least 3 characters long.
+
+#### Responses
+
+- **200 OK**
+  - **Description**: Distance and time successfully fetched.
+  - **Body**:
+    ```json
+    {
+      "distance": "Distance between locations",
+      "duration": "Time between locations"
+    }
+    ```
+  - **Example**:
+    ```json
+    {
+      "distance": "5 km",
+      "duration": "15 mins"
+    }
+    ```
+
+- **400 Bad Request**
+  - **Description**: Validation error or missing required fields.
+  - **Body**:
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "Error message",
+          "param": "Field name",
+          "location": "query"
+        }
+      ]
+    }
+    ```
+
+### Endpoint
+
+`/maps/get-suggestions`
+
+#### HTTP Method
+
+`GET`
+
+#### Description
+
+Gets autocomplete suggestions for a given input.
+
+#### Request Query Parameters
+
+- `input` (string, required): The input string to get suggestions for. Must be at least 3 characters long.
+
+#### Responses
+
+- **200 OK**
+  - **Description**: Suggestions successfully fetched.
+  - **Body**:
+    ```json
+    {
+      "predictions": [
+        {
+          "description": "Suggestion description",
+          "place_id": "Place ID"
+        }
+      ]
+    }
+    ```
+  - **Example**:
+    ```json
+    {
+      "predictions": [
+        {
+          "description": "123 Main St, San Francisco, CA",
+          "place_id": "ChIJd_Y0eVIvkIARuQyDN0F1LBA"
+        }
+      ]
+    }
+    ```
+
+- **400 Bad Request**
+  - **Description**: Validation error or missing required fields.
+  - **Body**:
+    ```json
+    {
+      "errors": [
+        {
+          "msg": "Error message",
+          "param": "Field name",
+          "location": "query"
+        }
+      ]
+    }
+    ```

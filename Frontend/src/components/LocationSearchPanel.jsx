@@ -1,31 +1,38 @@
 import React from 'react'
 
-const LocationSearchPanel = (props) => {
+const LocationSearchPanel = ({ suggestions, setPickup, setDestination, activeField }) => {
 
+    const handleSuggestionClick = (suggestion) => {
+        if (activeField === 'pickup') {
+            setPickup(suggestion)
+        } else if (activeField === 'destination') {
+            setDestination(suggestion)
+        }
+        // setVehiclePanel(true)
+        // setPanelOpen(false)
+    }
 
-  // Sample array for locations
-  const locations = [
-    "24B, Near Kapoor's cafe, Lucknow",
-    "21B, Near HP Petrol Pump, Lucknow",
-    "34A, Avadh Bus Stand, Lucknow",
-    "40G, Near Badshahnagar Metro, Lucknow"
-  ]
-  return (
-    <div>
-      {/* This is just sample data */}
-      {
-        locations.map(function(el, idx){
-          return <div key={idx} onClick={()=>{
-            props.setVehiclePanel(true)
-            props.setPanelOpen(false)
-          }} className='flex items-center justify-start my-2 rounded-xl gap-4 border-2 border-gray-50 active:border-black p-3'>
-          <h2 className='bg-[#eee] h-10 w-10 flex items-center justify-center rounded-full'><i className="ri-map-pin-fill text-xl"></i></h2>
-          <h4 className='text-lg font-medium'>{el}</h4>
-        </div>
-        })
-      }
-    </div>
-  )
+    return (
+      <div>
+          {suggestions && suggestions.length > 0 ? (
+              suggestions.map((elem, idx) => (
+                  <div key={elem.place_id} 
+                      onClick={() => handleSuggestionClick(elem.structured_formatting.main_text)} 
+                      className='flex gap-4 border-2 p-3 border-gray-50 active:border-black rounded-xl items-center my-2 justify-start'>
+                      
+                      <h2 className='bg-[#eee] h-8 flex items-center justify-center w-12 rounded-full'>
+                          <i className="ri-map-pin-fill"></i>
+                      </h2>
+                      
+                      <h4 className='font-medium'>{elem.structured_formatting.main_text}</h4>
+                  </div>
+              ))
+          ) : (
+              <h4 className='text-gray-500 text-center mt-3'>No suggestions found</h4>
+          )}
+      </div>
+  );
+  
 }
 
 export default LocationSearchPanel

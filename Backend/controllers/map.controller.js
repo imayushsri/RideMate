@@ -1,3 +1,42 @@
+/**
+ * @module mapController
+ * @description Controller for handling map-related requests.
+ */
+
+ /**
+    * Get coordinates for a given address.
+    * 
+    * @async
+    * @function getCoordinate
+    * @param {Object} req - Express request object.
+    * @param {Object} res - Express response object.
+    * @param {Function} next - Express next middleware function.
+    * @returns {Promise<void>} - Returns a JSON response with coordinates or an error message.
+    */
+ 
+ /**
+    * Get distance and time between origin and destination.
+    * 
+    * @async
+    * @function getDistanceTime
+    * @param {Object} req - Express request object.
+    * @param {Object} res - Express response object.
+    * @param {Function} next - Express next middleware function.
+    * @returns {Promise<void>} - Returns a JSON response with distance and time or an error message.
+    */
+ 
+ /**
+    * Get autocomplete suggestions for a given input.
+    * 
+    * @async
+    * @function getAutoCompleteSuggestions
+    * @param {Object} req - Express request object.
+    * @param {Object} res - Express response object.
+    * @param {Function} next - Express next middleware function.
+    * @returns {Promise<void>} - Returns a JSON response with autocomplete suggestions or an error message.
+    */
+
+ 
 const mapService = require('../services/maps.service');
 const { validationResult } = require('express-validator');
 
