@@ -13,18 +13,20 @@ const LocationSearchPanel = ({ suggestions, setPickup, setDestination, activeFie
     }
 
     return (
-      <div>
+      <div className='h-full overflow-y-scroll'>
           {suggestions && suggestions.length > 0 ? (
               suggestions.map((elem, idx) => (
                   <div key={elem.place_id} 
                       onClick={() => handleSuggestionClick(elem.structured_formatting.main_text)} 
-                      className='flex gap-4 border-2 p-3 border-gray-50 active:border-black rounded-xl items-center my-2 justify-start'>
+                      className='flex gap-4 border-2 p-3 m-0 border-gray-50 active:border-black rounded-xl items-center  justify-start'>
                       
-                      <h2 className='bg-[#eee] h-8 flex items-center justify-center w-12 rounded-full'>
+                      <h2 className='bg-[#eee] h-8 flex items-center justify-center rounded-full w-[15%]'>
                           <i className="ri-map-pin-fill"></i>
                       </h2>
-                      
-                      <h4 className='font-medium'>{elem.structured_formatting.main_text}</h4>
+                      <div className='block items-center justify-end w-[85%]'>
+                      <h4 className='font-medium'>{elem.structured_formatting.main_text}</h4> <br />
+                      <p className='text-xs text-gray-600 -mt-5'>{elem.structured_formatting.secondary_text}</p>
+                      </div>
                   </div>
               ))
           ) : (

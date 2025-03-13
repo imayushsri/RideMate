@@ -9,39 +9,42 @@ const VehiclePanel = (props) => {
         <h3 className='text-2xl font-semibold mb-5'>Choose a vehicle</h3>
               {/* Rides */}
               <div onClick={()=>{
+                props.selectVehicle('car')
                 props.setConfirmRidePanel(true)
               }} className='flex w-full items-center justify-between p-3 border-2 border-gray-50 active:border-black rounded-xl mb-2'>
-                <img src="Images/car.webp" alt="" className='h-10' />
-                <div className='w-1/2 ml-2'>
+                <img src="Images/car.webp" alt="" className='h-10  w-[20%]' />
+                <div className='ml-2 w-[54%]'>
                   <h4 className='font-medium text-lg'>RMate Car <span className='ms-0.5'><i className="ri-user-fill"></i>4</span></h4>
                   <h5 className='font-medium text-sm'>2 mins away</h5>
                   <p className='font-normal text-xs text-gray-600'>Affordable, compact rides</p>
                 </div>
-                <h2 className='text-lg font-semibold'>₹192.30</h2>
+                <h2 className='text-lg font-semibold w-[15%] pe-4'>{props.fare?.car ? `₹${props.fare.car}` : 'Fare not available'}</h2>
               </div>
 
               <div onClick={()=>{
+                props.selectVehicle('moto')
                 props.setConfirmRidePanel(true)
               }} className='flex w-full items-center justify-between p-3 border-2 border-gray-50 active:border-black rounded-xl mb-2'>
-                <img src="Images/bike.webp" alt="" className='h-10' />
-                <div className='w-1/2 ml-2'>
+                <img src="Images/bike.webp" alt="" className='h-10 w-[20%]' />
+                <div className='ml-2 w-[54%]'>
                   <h4 className='font-medium text-lg'>RMate Moto <span className='ms-0.5'><i className="ri-user-fill"></i>1</span></h4>
                   <h5 className='font-medium text-sm'>2 mins away</h5>
                   <p className='font-normal text-xs text-gray-600'>Affordable, moto rides</p>
                 </div>
-                <h2 className='text-lg font-semibold'>₹65.10</h2>
+                <h2 className='text-lg font-semibold w-[15%] pe-4'>{props.fare?.moto ? `₹${props.fare.moto}` : 'Fare not available'}</h2>
               </div>
 
               <div onClick={()=>{
+                props.selectVehicle('auto')
                 props.setConfirmRidePanel(true)
               }} className='flex w-full items-center justify-between p-3 border-2 border-gray-50 active:border-black rounded-xl mb-2'>
-                <img src="Images/auto.webp" alt="" className='h-10' />
-                <div className='w-1/2 ml-2'>
+                <img src="Images/auto.webp" alt="" className='h-10  w-[20%]' />
+                <div className='ml-2 w-[54%]'>
                   <h4 className='font-medium text-lg'>RMate Auto <span className='ms-0.5'><i className="ri-user-fill"></i>3</span></h4>
                   <h5 className='font-medium text-sm'>2 mins away</h5>
                   <p className='font-normal text-xs text-gray-600'>Affordable, auto rides</p>
                 </div>
-                <h2 className='text-lg font-semibold'>₹115.50</h2>
+                <h2 className='text-lg font-semibold w-[15%] pe-4'>{props.fare?.auto ? `₹${props.fare.auto}` : 'Fare not available'}</h2>
               </div>
     </div>
   )

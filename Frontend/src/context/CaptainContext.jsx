@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState } from 'react';
 
 export const CaptainDataContext = createContext();
 
@@ -21,9 +21,11 @@ const CaptainContext = ({ children }) => {
         setError,
         updateCaptain
     }
+    console.log("Value.captain",value.captain);
 
+    
     return (
-        <CaptainDataContext.Provider value={{ captain, setCaptain }}>
+        <CaptainDataContext.Provider value={value}>
             {children}
         </CaptainDataContext.Provider>
     );
