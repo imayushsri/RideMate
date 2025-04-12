@@ -1,57 +1,80 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+
 
 const FinishRide = (props) => {
-  return (
-    <div>
-            <h5 onClick={() => {
+
+    const navigate = useNavigate()
+
+    async function endRide() {
+        const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/end-ride`, {
+
+            rideId: props.ride._id
+
+
+        }, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+
+        if (response.status === 200) {
+            navigate('/captain-home')
+        }
+
+    }
+
+    return (
+        <div>
+            <h5 className='p-1 text-center w-[93%] absolute top-0' onClick={() => {
                 props.setFinishRidePanel(false)
-            }} className='p-1 text-center absolute top-0 w-[92%]'><i className="text-3xl text-gray-200 ri-arrow-down-wide-line"></i></h5>
-            <h3 className='text-2xl font-semibold mb-9'>Finish this Ride!</h3>
-
-            <div className='flex items-center justify-between p-5 border-2 border-yellow-200 rounded-xl'>
-                <div className='flex items-center gap-3'>
-                    <img src="/Images/user.avif" alt="" className='w-12 h-12 rounded-full object-cover' />
-                    <h2 className='text-lg font-medium'>Ayush Srivastava</h2>
+            }}><i className="text-3xl text-gray-200 ri-arrow-down-wide-line"></i></h5>
+            <h3 className='text-2xl font-semibold mb-5'>Finish this Ride</h3>
+            <div className='flex items-center justify-between p-4 border-2 border-yellow-400 rounded-lg mt-4'>
+                <div className='flex items-center gap-3 '>
+                    <img className='h-12 rounded-full object-cover w-12' src="https://i.pinimg.com/236x/af/26/28/af26280b0ca305be47df0b799ed1b12b.jpg" alt="" />
+                    <h2 className='text-lg font-medium'>{props.ride?.user.fullname.firstname}</h2>
                 </div>
+                <h5 className='text-lg font-semibold'>2.2 KM</h5>
             </div>
-
-            <div className='flex flex-col gap-2 justify-between items-center'>
-
+            <div className='flex gap-2 justify-between flex-col items-center'>
                 <div className='w-full mt-5'>
-                    <div className='flex items-center gap-5 p-3 border-b-2 border-gray-200'>
-                        <i className="text-lg ri-map-pin-user-fill"></i>
+                    <div className='flex items-center gap-5 p-3 border-b-2'>
+                        <i className="ri-map-pin-user-fill"></i>
                         <div>
-                            <h3 className='text-lg font-medium'>%^@/11-A</h3>
-                            <p className='text-sm -mt-1 text-gray-600'>Badshahnagar Metro, Lucknow</p>
+                            <h3 className='text-lg font-medium'>562/11-A</h3>
+                            <p className='text-sm -mt-1 text-gray-600'>{props.ride?.pickup}</p>
                         </div>
                     </div>
-
-                    <div className='flex items-center gap-5 p-3 border-b-2 border-gray-200'>
-                        <i className="text-lg ri-map-pin-fill"></i>
+                    <div className='flex items-center gap-5 p-3 border-b-2'>
+                        <i className="text-lg ri-map-pin-2-fill"></i>
                         <div>
-                            <h3 className='text-lg font-medium'>%^@/11-A</h3>
-                            <p className='text-sm -mt-1 text-gray-600'>Badshahnagar Metro, Lucknow</p>
+                            <h3 className='text-lg font-medium'>562/11-A</h3>
+                            <p className='text-sm -mt-1 text-gray-600'>{props.ride?.destination}</p>
                         </div>
                     </div>
-
                     <div className='flex items-center gap-5 p-3'>
-                        <i className="text-lg ri-money-rupee-circle-fill"></i>
+                        <i className="ri-currency-line"></i>
                         <div>
-                            <h3 className='text-lg font-medium'>₹193.20</h3>
-                            <p className='text-sm -mt-1 text-gray-600'>Payment Cash</p>
+                            <h3 className='text-lg font-medium'>₹{props.ride?.fare} </h3>
+                            <p className='text-sm -mt-1 text-gray-600'>Cash Cash</p>
                         </div>
                     </div>
                 </div>
-                
-                <div className='w-full'>
-                    <Link to="/captain-home" className='w-full flex text-lg justify-center mt-5 bg-green-600 text-white font-semibold p-3 rounded-lg mb-2'>Finish Ride
-                    </Link>
-                    <p className='text-red-500 mt-6 text-xs text-center'>Click on Finish Ride if you have completed the payment.</p>
+
+                <div className='mt-10 w-full'>
+
+                    <button
+                        onClick={endRide}
+                        className='w-full mt-5 flex  text-lg justify-center bg-green-600 text-white font-semibold p-3 rounded-lg'>Finish Ride</button>
+
+
                 </div>
             </div>
         </div>
-  )
+    )
 }
 
 export default FinishRide

@@ -4,13 +4,7 @@ export const CaptainDataContext = createContext();
 
 
 const CaptainContext = ({ children }) => {
-    const [captain, setCaptain] = useState({
-        email: '',
-        fullName:{
-            firstName: '',
-            lastName: ''
-        }
-    });
+    const [captain, setCaptain] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -18,7 +12,7 @@ const CaptainContext = ({ children }) => {
         setCaptain(captainData);
     }
 
-    const value = {
+    const values = {
         captain,
         setCaptain,
         isLoading,
@@ -27,11 +21,10 @@ const CaptainContext = ({ children }) => {
         setError,
         updateCaptain
     }
-    console.log("Value.captain",value.captain);
 
     
     return (
-        <CaptainDataContext.Provider value={value}>
+        <CaptainDataContext.Provider value={values}>
             {children}
         </CaptainDataContext.Provider>
     );

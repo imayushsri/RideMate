@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap';
 import 'remixicon/fonts/remixicon.css'
@@ -8,6 +8,9 @@ import ConfirmRide from '../components/ConfirmRide';
 import LookingForDriver from '../components/LookingForDriver';
 import WaitingForDriver from '../components/WaitingForDriver';
 import axios from 'axios';
+import { SocketContext } from '../context/SocketContext';
+import { UserDataContext } from '../context/userContext';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [pickup, setPickup] = useState('');
@@ -28,7 +31,27 @@ const Home = () => {
   const [activeField, setActiveField] = useState(null);
   const [fare, setFare] = useState(null);
   const [vehicleType, setVehicleType] = useState(null);
+  const {socket} = useContext(SocketContext);
+  const { user } = useContext(UserDataContext);
+  const [ ride, setRide ] = useState(null)
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    socket.emit('join', { userId: user._id, userType: 'user' });
+  } , [])
+  console.log("user", user);
+
+  socket.on('ride-confirmed', ride => {
+    setVehicleFound(false)
+    setWaitingForDriver(true)
+    setRide(ride)
+})
+
+socket.on('ride-started', ride => {
+  console.log("ride")
+  setWaitingForDriver(false)
+  navigate('/riding', { state: { ride } })
+})
 
   const handlePickupChange = async (e) => {
     setPickup(e.target.value);
@@ -263,7 +286,11 @@ const Home = () => {
 
       {/* Waiting for driver */}
       <div ref={WaitingForDriverRef} className='fixed w-full z-10 bottom-0 px-3 pb-5 pt-12 bg-white'>
-        <WaitingForDriver setWaitingForDriver={setWaitingForDriver} />
+        <WaitingForDriver 
+         ride={ride}
+         setVehicleFound={setVehicleFound}
+         setWaitingForDriver={setWaitingForDriver}
+         waitingForDriver={waitingForDriver} />
       </div>
 
     </div>
