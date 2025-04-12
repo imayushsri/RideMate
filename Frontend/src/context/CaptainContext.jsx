@@ -4,7 +4,13 @@ export const CaptainDataContext = createContext();
 
 
 const CaptainContext = ({ children }) => {
-    const [captain, setCaptain] = useState(null);
+    const [captain, setCaptain] = useState({
+        email: '',
+        fullName:{
+            firstName: '',
+            lastName: ''
+        }
+    });
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
