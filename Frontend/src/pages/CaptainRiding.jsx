@@ -1,34 +1,80 @@
-import React, { useRef, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import React, { useEffect, useRef, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import FinishRide from '../components/FinishRide'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
-// import LiveTracking from '../components/LiveTracking'
+import LiveTracking from '../components/LiveTracking'
+import axios from 'axios'
+import './map.css'
 
 const CaptainRiding = () => {
+    const location = useLocation()
+    const { ride } = location.state || {}
+    console.log(ride);
 
     const [ finishRidePanel, setFinishRidePanel ] = useState(false)
     const finishRidePanelRef = useRef(null)
-    const location = useLocation()
     const rideData = location.state?.ride
 
+    const [pointA, setPointA] = useState(null);
+    const [pointB, setPointB] = useState(null);
 
+    const [error, setError] = useState(null);
 
-    useGSAP(function () {
-        if (finishRidePanel) {
-            gsap.to(finishRidePanelRef.current, {
-                transform: 'translateY(0)'
-            })
-        } else {
-            gsap.to(finishRidePanelRef.current, {
-                transform: 'translateY(100%)'
-            })
+    const pickup = ride.pickup;
+    const destination = ride.destination;
+    const token = localStorage.getItem('token');
+    
+    const fetchCoordinatesA = async () => {
+        try {
+            const response = await axios.get(`http://localhost:4000/maps/get-coordinate`, {
+                params: { address: pickup },
+                headers: {
+                    Authorization: `Bearer ${token}` // pass the token in headers
+                }
+            });
+            setPointA(response.data);
+            setError(null);
+        } catch (err) {
+            console.error(err);
+            setError('Failed to fetch coordinates');
         }
-    }, [ finishRidePanel ])
+    };
+
+    const fetchCoordinatesB = async () => {
+        try {
+            const response = await axios.get(`http://localhost:4000/maps/get-coordinate`, {
+                params: { address: destination },
+                headers: {
+                    Authorization: `Bearer ${token}` // pass the token in headers
+                }
+            });
+            setPointB(response.data);
+            setError(null);
+        } catch (err) {
+            console.error(err);
+            setError('Failed to fetch coordinates');
+        }
+    };
+
+    useEffect(() => {
+        fetchCoordinatesA();
+        fetchCoordinatesB();
+    }, []);
+
+
+
+    useGSAP(() => {
+        gsap.to(finishRidePanelRef.current, {
+            transform: finishRidePanel ? 'translateY(0%)' : 'translateY(100%)',
+            duration: 0.5,
+            ease: 'power3.out'
+        });
+    }, [finishRidePanel]);
 
 
     return (
-        <div className='h-screen relative flex flex-col justify-end'>
+        <div className='h-screen relative flex flex-col justify-end z-0'>
 
             <div className='fixed p-6 top-0 flex items-center justify-between w-screen'>
                 <img className='w-16' src="Images/RideMate.png" alt="" />
@@ -37,7 +83,7 @@ const CaptainRiding = () => {
                 </Link>
             </div>
 
-            <div className='h-1/5 p-6 flex items-center justify-between relative bg-yellow-400 pt-10'
+            <div className='h-1/5 p-6 flex items-center justify-between relative bg-yellow-400 pt-10 z-50'
                 onClick={() => {
                     setFinishRidePanel(true)
                 }}
@@ -48,15 +94,17 @@ const CaptainRiding = () => {
                 <h4 className='text-xl font-semibold'>{'4 KM away'}</h4>
                 <button className=' bg-green-600 text-white font-semibold p-3 px-10 rounded-lg'>Complete Ride</button>
             </div>
-            <div ref={finishRidePanelRef} className='fixed w-full z-[500] bottom-0 translate-y-full bg-white px-3 py-10 pt-12'>
+            <div ref={finishRidePanelRef} className='fixed w-full z-50 bottom-0 bg-white px-3 py-10 pt-12'
+            style={{ transform: 'translateY(100%)' }} 
+            >
                 <FinishRide
                     ride={rideData}
                     setFinishRidePanel={setFinishRidePanel} />
             </div>
 
-            <div className='h-screen fixed w-screen top-0 z-[-1]'>
-                {/* <LiveTracking /> */}
-                <img className='h-full w-full object-cover' src="Images/Homemap.gif" alt="" />
+            <div className='h-full fixed w-screen top-0 z-0'>
+            <LiveTracking pointA={pointA} pointB={pointB} />
+                
             </div>
 
         </div>
