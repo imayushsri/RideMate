@@ -10,7 +10,7 @@ import './map.css'
 const CaptainRiding = () => {
     const location = useLocation()
     const { ride } = location.state || {}
-    console.log(ride);
+    // console.log(ride);
 
     const [ finishRidePanel, setFinishRidePanel ] = useState(false)
     const finishRidePanelRef = useRef(null)
@@ -91,8 +91,9 @@ const CaptainRiding = () => {
                 <h5 className='p-1 text-center w-[90%] absolute top-0' onClick={() => {
 
                 }}><i className="text-3xl text-gray-800 ri-arrow-up-wide-line"></i></h5>
-                <h4 className='text-xl font-semibold'>{'4 KM away'}</h4>
+                {/* <h4 className='text-xl font-semibold'>{'4 KM away'}</h4> */}
                 <button className=' bg-green-600 text-white font-semibold p-3 px-10 rounded-lg'>Complete Ride</button>
+                <div className='bg-red-600 text-white font-semibold p-2 rounded-lg px-5'><a href="tel:112"><i class="ri-alarm-warning-line"></i> SOS</a></div>
             </div>
             <div ref={finishRidePanelRef} className='fixed w-full z-50 bottom-0 bg-white px-3 py-10 pt-12'
             style={{ transform: 'translateY(100%)' }} 

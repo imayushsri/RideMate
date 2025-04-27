@@ -126,7 +126,8 @@ async function confirmRide() {
       <div ref={confirmRidePopUpPanelRef} className='bg-white h-screen w-full bottom-0 fixed pb-5 pt-12 px-3 translate-y-full z-10'>
         <ConfirmRidePopUp
         ride={ride}
-        setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}  setRidePopUpPanel={setRidePopUpPanel}/>
+        setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}  
+        setRidePopUpPanel={setRidePopUpPanel}/>
       </div>
     </div>
   )

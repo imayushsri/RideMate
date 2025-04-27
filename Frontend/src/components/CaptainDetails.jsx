@@ -4,7 +4,7 @@ import { CaptainDataContext } from '../context/CaptainContext';
 const CaptainDetails = () => {
 
   const {captain} = useContext(CaptainDataContext);
-  console.log(captain);
+  // console.log(captain);
 
   if (!captain) {
     return <div>Loading captain data...</div>;
@@ -14,7 +14,7 @@ const CaptainDetails = () => {
     <div>
               <div className='flex justify-between items-center'>
           <div className='flex justify-start gap-3 items-center'>
-            <img src="\Images\driver.jpg" alt="" className='h-10 rounded-full w-10 object-cover' />
+            {/* <img src="\Images\driver.jpg" alt="" className='h-10 rounded-full w-10 object-cover' /> */}
             <h4 className='text-lg font-medium uppercase'>{captain?.fullname?.firstname + ' ' + captain?.fullname?.lastname || 'Please log in'}</h4>
           </div>
           <div>

@@ -13,8 +13,10 @@ import CaptainProtectedWrapper from './pages/CaptainProtectedWrapper'
 import CaptainLogout from './pages/CaptainLogout'
 import Riding from './pages/Riding'
 import CaptainRiding from './pages/CaptainRiding'
+import CaptainTerms from './pages/CaptainTerms'
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
+import UserTerms from './pages/UserTerms'
 
 const App = () => {
   return (
@@ -38,13 +40,14 @@ const App = () => {
             <UserLogout/>
           </UserProtectedWrapper>}/>
 
-          {/* Captain Routes */}
+        
           <Route path='riding' element={
             <UserProtectedWrapper>
               <Riding/>
             </UserProtectedWrapper>
           }/>
           
+            {/* Captain Routes */}
           <Route path='/captain-home' element={
             <CaptainProtectedWrapper>
               <CaptainHome/>
@@ -59,6 +62,12 @@ const App = () => {
             <CaptainProtectedWrapper>
               <CaptainRiding/>
             </CaptainProtectedWrapper>
+          }/>
+          <Route path='/captain-terms' element={
+              <CaptainTerms/>
+          }/>
+          <Route path='/user-terms' element={
+              <UserTerms/>
           }/>
       </Routes>
     </div>

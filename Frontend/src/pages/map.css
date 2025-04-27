@@ -1,6 +1,6 @@
 /* Important: The container must have explicit dimensions */
 .map-container {
-    height: 550px !important;
+    height: 100% !important;
     width: 100%;
     z-index: 1;
   }

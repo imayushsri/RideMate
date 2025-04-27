@@ -48,7 +48,7 @@ const Home = () => {
 })
 
 socket.on('ride-started', ride => {
-  console.log("ride")
+  // console.log("ride")
   setWaitingForDriver(false)
   navigate('/riding', { state: { ride } })
 })
@@ -100,7 +100,7 @@ socket.on('ride-started', ride => {
         }
       });
     setFare(response.data);
-    console.log(response.data)
+    // console.log(response.data)
   };
 
  async function createRide() {
@@ -145,7 +145,7 @@ socket.on('ride-started', ride => {
     }
     else {
       gsap.to(vehiclePanelRef.current, {
-        transform: 'translateY(100%)'
+        transform: 'translateY(120%)'
       })
     }
   }, [vehiclePanel])
@@ -158,7 +158,7 @@ socket.on('ride-started', ride => {
     }
     else {
       gsap.to(confirmRidePanelRef.current, {
-        transform: 'translateY(100%)'
+        transform: 'translateY(120%)'
       })
     }
   }, [confirmRidePanel])
@@ -171,7 +171,7 @@ socket.on('ride-started', ride => {
     }
     else {
       gsap.to(vehicleFoundRef.current, {
-        transform: 'translateY(100%)'
+        transform: 'translateY(120%)'
       })
     }
   }, [vehicleFound])
@@ -184,7 +184,7 @@ socket.on('ride-started', ride => {
     }
     else {
       gsap.to(WaitingForDriverRef.current, {
-        transform: 'translateY(100%)'
+        transform: 'translateY(120%)'
       })
     }
   }, [waitingForDriver])

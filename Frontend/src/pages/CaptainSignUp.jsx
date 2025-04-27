@@ -17,7 +17,7 @@ const CaptainSignUp = () => {
 
   const [vehicleType, setVehicleType] = useState('');
 
-  const submitHandler = async(e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     const captainData = {
       fullname: {
@@ -26,7 +26,7 @@ const CaptainSignUp = () => {
       },
       email: email,
       password: password,
-      vehicle:{
+      vehicle: {
         color: vehicleColor,
         plate: vehiclePlate,
         capacity: vehicleCapacity,
@@ -36,7 +36,7 @@ const CaptainSignUp = () => {
 
     const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/register`, captainData)
 
-    if(response.status === 201){
+    if (response.status === 201) {
       const data = response.data;
       setCaptain(data.captain);
       localStorage.setItem('token', data.token);
@@ -146,6 +146,9 @@ const CaptainSignUp = () => {
               className='bg-[#eeeeee] rounded px-4 py-2 mb-7 w-full text-lg placeholder:text-base'
               placeholder='Vehicle capacity'
             />
+            <div className='py-3'>
+              <input type="checkbox" required /> I agree to the <Link to="/captain-terms" className='text-blue-600'>terms and conditions</Link>
+            </div>
 
             <button
               className='bg-[#111] rounded text-white py-3 mb-3 w-full font-semibold text-lg'
