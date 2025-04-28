@@ -1,32 +1,46 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { CaptainDataContext } from '../context/CaptainContext';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CaptainLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const { captain, setCaptain } = useContext(CaptainDataContext);
+  const { setCaptain } = useContext(CaptainDataContext);
   const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    const captaindets = {
+    const captainData = {
       email: email,
       password: password
     };
 
-    const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/login`, captaindets);
+    try {
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/captains/login`, captainData);
 
-    if (response.status === 200) {
-      const data = response.data;
-      setCaptain(data.captain); // Update the captain state
-      // console.log(data.captain);
-      
-      localStorage.setItem('token', data.token);
-      navigate('/captain-home');
+      if (response.status === 200) {
+        const data = response.data;
+        setCaptain(data.captain); // Update the captain state
+        localStorage.setItem('token', data.token);
+        navigate('/captain-home');
+        toast.success('Login Successful!');
+      }
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 403) {
+          toast.error('Your account is blocked.');
+        } else if (error.response.status === 401) {
+          toast.error('Invalid email or password.');
+        } else {
+          toast.error('An error occurred. Please try again.');
+        }
+      } else {
+        toast.error('Network error. Please check your connection.');
+      }
     }
 
     setEmail('');
@@ -72,6 +86,7 @@ const CaptainLogin = () => {
           Sign in as User
         </Link>
       </div>
+      <ToastContainer />
     </div>
   );
 };
