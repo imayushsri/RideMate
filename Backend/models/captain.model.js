@@ -55,7 +55,7 @@ const captainSchema = new mongoose.Schema({
         },
         vehicleType:{
             type: String,
-            enum: ['car', 'motorcycle', 'auto'],
+            enum: ['car', 'moto', 'auto'],
             required: true,
         },
     },
@@ -67,6 +67,10 @@ const captainSchema = new mongoose.Schema({
             type: Number,
         },
     },
+    isBlock: { 
+        type: Boolean, 
+        default: false
+    }
 });
 
 captainSchema.methods.generateAuthToken = function () {

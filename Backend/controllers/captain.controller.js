@@ -35,27 +35,57 @@ module.exports.registerCaptain = async (req, res, next) => {
 }
 
 module.exports.loginCaptain = async (req, res, next) => {
+    const { email, password } = req.body;
+    
+    // Check for validation errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ 
+            code: 400,
+            message: 'Validation failed',
+            errors: errors.array()
+        });
     }
 
-    const { email, password } = req.body;
+    // Find captain by email and include password field
     const captain = await captainModel.findOne({ email }).select('+password');
-
+    
     if (!captain) {
-        return res.status(401).json({ message: 'Invalid email or password' });
+        return res.status(401).json({
+            code: 401,
+            message: 'Invalid Email or Password'
+        });
     }
+
+    // Check if the password matches
     const isMatch = await captain.comparePassword(password);
-
     if (!isMatch) {
-        return res.status(401).json({ message: 'Invalid email or password' });
+        return res.status(401).json({ // Changed to 401 (Unauthorized)
+            code: 401,
+            message: 'Invalid Email or Password'
+        });
     }
-    const token = captain.generateAuthToken();
 
+    if (captain.isBlock) {
+        return res.status(403).json({
+            code: 403,
+            message: 'Your Account is Blocked',
+            data: {}
+        });
+    }
+
+    // Generate token and send response if the captain is not blocked
+    const token = captain.generateAuthToken();
     res.cookie('token', token);
-    res.status(200).json({ token, captain });
+
+    return res.status(200).json({
+        code: 200,
+        message: 'Login Successful',
+        token,
+        captain
+    });
 }
+
 
 module.exports.getCaptainProfile = async (req, res, next) => {
     res.status(200).json(req.captain);

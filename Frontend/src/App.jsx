@@ -17,6 +17,11 @@ import CaptainTerms from './pages/CaptainTerms'
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 import UserTerms from './pages/UserTerms'
+import AdminLogin from './pages/AdminLogin'
+import AdminProtectedWrapper from './pages/AdminProtectedWrapper'
+import AdminHome from './pages/AdminHome'
+import AdminCaptains from './pages/AdminCaptains'
+import AdminUsers from './pages/AdminUsers'
 
 const App = () => {
   return (
@@ -28,10 +33,11 @@ const App = () => {
         <Route path='/signup' element={<UserSignUp/>}/>
         <Route path='/captain-login' element={<CaptainLogin/>}/>
         <Route path='/captain-signup' element={<CaptainSignUp/>}/>
+        <Route path='/admin-login' element={<AdminLogin/>}/>
 
         {/* User Routes */}
         <Route path='/home' element={
-          <UserProtectedWrapper>
+        <UserProtectedWrapper>
           <Home/>
         </UserProtectedWrapper>}/>
         
@@ -68,6 +74,23 @@ const App = () => {
           }/>
           <Route path='/user-terms' element={
               <UserTerms/>
+          }/>
+
+          {/* Admin Routes */}
+          <Route path='/admin' element={
+            <AdminProtectedWrapper>
+              <AdminHome/>
+            </AdminProtectedWrapper>
+          }/>
+          <Route path='/captains-list' element={
+            <AdminProtectedWrapper>
+              <AdminCaptains/>
+            </AdminProtectedWrapper>
+          }/>
+          <Route path='/users-list' element={
+            <AdminProtectedWrapper>
+              <AdminUsers/>
+            </AdminProtectedWrapper>
           }/>
       </Routes>
     </div>

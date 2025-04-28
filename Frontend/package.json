@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
+    "@hookform/resolvers": "^5.0.1",
     "@react-google-maps/api": "^2.20.6",
     "@tailwindcss/vite": "^4.0.8",
     "axios": "^1.7.9",
@@ -19,10 +20,13 @@
     "leaflet-routing-machine": "^3.2.12",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-hook-form": "^7.56.1",
     "react-leaflet": "^5.0.0",
     "react-router-dom": "^7.2.0",
+    "react-toastify": "^11.0.5",
     "remixicon": "^4.6.0",
-    "socket.io-client": "^4.8.1"
+    "socket.io-client": "^4.8.1",
+    "yup": "^1.6.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",

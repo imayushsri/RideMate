@@ -30,6 +30,10 @@ const userSchema = new mongoose.Schema({
     socketId: {
         type: String,
     },
+    isBlock: { 
+        type: Boolean, 
+        default: false
+    }
 
 });
 
