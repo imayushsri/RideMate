@@ -22,6 +22,7 @@ import AdminProtectedWrapper from './pages/AdminProtectedWrapper'
 import AdminHome from './pages/AdminHome'
 import AdminCaptains from './pages/AdminCaptains'
 import AdminUsers from './pages/AdminUsers'
+import AdminLogout from './pages/AdminLogout'
 
 const App = () => {
   return (
@@ -90,6 +91,11 @@ const App = () => {
           <Route path='/users-list' element={
             <AdminProtectedWrapper>
               <AdminUsers/>
+            </AdminProtectedWrapper>
+          }/>
+          <Route path='/admin-logout' element={
+            <AdminProtectedWrapper>
+              <AdminLogout/>
             </AdminProtectedWrapper>
           }/>
       </Routes>

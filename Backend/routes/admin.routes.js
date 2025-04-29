@@ -2,7 +2,8 @@ const express = require('express');
 const adminRoute = express.Router();  //Extract router from express
 const { adminTable } = require('../models/admin.model');
 const userTable = require('../models/user.model');
-const captainTable = require('../models/captain.model')
+const captainTable = require('../models/captain.model');
+const blacklistTokenModel = require('../models/blacklistToken.model');
 
 adminRoute.post('/register', async (req, res) => {
     const name = req.body.name;
@@ -105,5 +106,12 @@ adminRoute.put('/captainblock/:_id',async(req, res)=>{
             message: "Updated Successfully",
             data: result
         })
+})
+
+adminRoute.get('/logout', async (req, res) => {
+    res.clearCookie('token');
+        const token = req.cookies.token || req.headers.authorization.split(' ')[1];
+        // await blacklistTokenModel.create({token});
+        res.status(200).json({message: 'Logged Out'});
 })
 module.exports = adminRoute;

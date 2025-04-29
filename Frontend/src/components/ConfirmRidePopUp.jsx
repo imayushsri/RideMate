@@ -43,7 +43,11 @@ const ConfirmRidePopUp = (props) => {
                     <img src="/Images/user.avif" alt="" className='w-12 h-12 rounded-full object-cover' />
                     <h2 className='text-lg font-medium'>{props.ride?.user.fullname.firstname + " " + props.ride?.user.fullname.lastname}</h2>
                 </div>
-                <h5 className='text-lg font-semibold'>2.2 KM</h5>
+                <div>
+                <h5 className='text-sm font-semibold uppercase'>{props.distanceTime?.distance}</h5>
+                <h5 className='text-sm font-semibold uppercase'>{props.distanceTime?.duration}</h5>
+                </div>
+                
             </div>
 
             <div className='flex flex-col gap-2 justify-between items-center'>

@@ -62,6 +62,40 @@ const CaptainRiding = () => {
         fetchCoordinatesB();
     }, []);
 
+    const [distanceTime, setDistanceTime] = useState(null);
+
+useEffect(() => {
+    const fetchDistanceTime = async () => {
+        const origin = ride?.pickup;
+        const destination = ride?.destination;
+        const token = localStorage.getItem('token');
+
+        if (!origin || !destination) {
+            console.warn('Missing origin or destination');
+            return;
+        }
+
+        try {
+            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-distance-time`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                params: {
+                    origin,
+                    destination
+                }
+            });
+
+            setDistanceTime(response.data);
+            console.log("Distance & Time:", response.data);
+        } catch (error) {
+            console.error('Error fetching distance/time:', error.response?.data || error.message);
+        }
+    };
+
+    fetchDistanceTime();
+}, []);
+
 
 
     useGSAP(() => {
@@ -100,7 +134,9 @@ const CaptainRiding = () => {
             >
                 <FinishRide
                     ride={rideData}
-                    setFinishRidePanel={setFinishRidePanel} />
+                    setFinishRidePanel={setFinishRidePanel} 
+                    distanceTime={distanceTime}
+                    />
             </div>
 
             <div className='h-full fixed w-screen top-0 z-0'>
