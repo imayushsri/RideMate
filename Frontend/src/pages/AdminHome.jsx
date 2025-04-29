@@ -8,6 +8,11 @@ const AdminHome = () => {
     <div className='h-screen relative bg-[url(../public/images/HomeBG.png)] bg-cover bg-center w-full'>
       {/* RideMate Logo */}
       <img src="../public/images/RideMate.png" className='w-30 ml-5 mt-5 z-10 absolute top-0 left-0' />
+      <div className='absolute top-5 right-5 z-10'>
+              <Link to='/admin-logout' className='flex bg-white h-10 justify-center rounded-full w-10 items-center'>
+                <i className="text-lg font-medium ri-logout-box-r-line"></i>
+              </Link>
+            </div>
       
       {/* Admin Details Section with transparent white background */}
       <div className='absolute top-64 left-1/2 transform -translate-x-1/2 -translate-y-1/2  bg-op p-5 rounded-lg shadow-lg w-11/12 sm:w-1/3 z-20'>

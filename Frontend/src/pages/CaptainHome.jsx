@@ -67,6 +67,40 @@ async function confirmRide() {
 
 }
 
+const [distanceTime, setDistanceTime] = useState(null);
+
+useEffect(() => {
+    const fetchDistanceTime = async () => {
+        const origin = ride?.pickup;
+        const destination = ride?.destination;
+        const token = localStorage.getItem('token');
+
+        if (!origin || !destination) {
+            console.warn('Missing origin or destination');
+            return;
+        }
+
+        try {
+            const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/maps/get-distance-time`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                params: {
+                    origin,
+                    destination
+                }
+            });
+
+            setDistanceTime(response.data);
+            console.log("Distance & Time:", response.data);
+        } catch (error) {
+            console.error('Error fetching distance/time:', error.response?.data || error.message);
+        }
+    };
+
+    fetchDistanceTime();
+}, []);
+
   useGSAP(() => {
     if (ridePopUpPanel) {
       gsap.to(ridePopUpPanelRef.current, {
@@ -119,6 +153,7 @@ async function confirmRide() {
         setRidePopUpPanel={setRidePopUpPanel} 
         setConfirmRidePopUpPanel={setConfirmRidePopUpPanel} 
         confirmRide={confirmRide}
+        distanceTime={distanceTime}
         />
       </div>
 
@@ -127,7 +162,9 @@ async function confirmRide() {
         <ConfirmRidePopUp
         ride={ride}
         setConfirmRidePopUpPanel={setConfirmRidePopUpPanel}  
-        setRidePopUpPanel={setRidePopUpPanel}/>
+        setRidePopUpPanel={setRidePopUpPanel}
+        distanceTime={distanceTime}
+        />
       </div>
     </div>
   )

@@ -57,32 +57,37 @@ const AdminUsers = () => {
 
     return (
         <>
-        <div className='sticky top-0 bg-white mb-1'>
-            {/* Navbar */}
-            <nav className="bg-gray-800 p-4">
-                <div className="flex justify-center space-x-8">
-                    <Link to="/users-list" className={`text-lg font-semibold py-2 px-4 rounded ${isActiveLink('/users-list')}`}>
-                        Users List
-                    </Link>
-                    <Link to="/captains-list" className={`text-lg font-semibold py-2 px-4 rounded ${isActiveLink('/captains-list')}`}>
-                        Captains List
-                    </Link>
-                </div>
-            </nav>
+            <div className='sticky top-0 bg-white mb-1'>
+                {/* Navbar */}
+                <nav className="bg-gray-800 p-4">
+                    <div className="flex justify-center space-x-8 me-15">
+                        <Link to="/users-list" className={`text-lg font-semibold py-2 px-4 rounded ${isActiveLink('/users-list')}`}>
+                            Users List
+                        </Link>
+                        <Link to="/captains-list" className={`text-lg font-semibold py-2 px-4 rounded ${isActiveLink('/captains-list')}`}>
+                            Captains List
+                        </Link>
+                    </div>
+                </nav>
 
-            {/* Search Box */}
-            <div className="flex justify-center p-4">
-                <input
-                    type="text"
-                    placeholder="Search Users by Name or Email"
-                    className="px-4 py-2 rounded-lg border border-gray-300 w-[95%]"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)} // Update search query on change
-                />
-            </div>
+                {/* Search Box */}
+                <div className="flex justify-center p-4">
+                    <input
+                        type="text"
+                        placeholder="Search Users by Name or Email"
+                        className="px-4 py-2 rounded-lg border border-gray-300 w-[95%]"
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)} // Update search query on change
+                    />
+                </div>
             </div>
             {/* Users List Section */}
             <div className="flex justify-center items-center w-full p-1">
+                <div className='absolute top-5 right-5 z-10'>
+                    <Link to='/admin' className='flex bg-white h-10 justify-center rounded-full w-10 items-center'>
+                        <i className="text-lg font-medium ri-home-gear-line"></i>
+                    </Link>
+                </div>
                 {/* Flex container to center cards horizontally */}
                 <div className="grid w-[90%] gap-6">
                     {filteredUsers.map((el) => (
@@ -91,7 +96,7 @@ const AdminUsers = () => {
                                 <h5 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
                                     {el.fullname.firstname + ' ' + el.fullname.lastname}
                                 </h5>
-                                <span className="text-sm text-gray-500 dark:text-gray-400">{el.email}</span>
+                                <span className="text-base text-gray-500 dark:text-gray-400">{el.email}</span>
                                 <div className="flex mt-4 md:mt-6">
                                     <button
                                         onClick={() => handleBlock(el)}
