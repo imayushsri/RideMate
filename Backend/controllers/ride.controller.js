@@ -19,7 +19,7 @@ module.exports.createRide = async (req, res) => {
         console.log(pickupCoordinates);
         
         const captainsInRadius = await mapService.getCaptainsInTheRadius(pickupCoordinates.ltd, pickupCoordinates.lng, 5);
-        console.log(captainsInRadius);
+        console.log("CAR",captainsInRadius);
 
         ride.otp = "";
 

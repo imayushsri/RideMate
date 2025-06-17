@@ -69,6 +69,11 @@ const AdminUsers = () => {
                         </Link>
                     </div>
                 </nav>
+                <div className='absolute top-5 right-5 z-10'>
+                    <Link to='/admin' className='flex bg-white h-10 justify-center rounded-full w-10 items-center'>
+                        <i className="text-lg font-medium ri-home-gear-line"></i>
+                    </Link>
+                </div>
 
                 {/* Search Box */}
                 <div className="flex justify-center p-4">
@@ -83,11 +88,7 @@ const AdminUsers = () => {
             </div>
             {/* Users List Section */}
             <div className="flex justify-center items-center w-full p-1">
-                <div className='absolute top-5 right-5 z-10'>
-                    <Link to='/admin' className='flex bg-white h-10 justify-center rounded-full w-10 items-center'>
-                        <i className="text-lg font-medium ri-home-gear-line"></i>
-                    </Link>
-                </div>
+                
                 {/* Flex container to center cards horizontally */}
                 <div className="grid w-[90%] gap-6">
                     {filteredUsers.map((el) => (

@@ -40,8 +40,10 @@ const CaptainHome = () => {
     }
 
     const locationInterval = setInterval(updateLocation, 10000)
+    
     updateLocation()
 }, [])
+
 
 socket.on('new-ride', (data) => {
   setRide(data);
@@ -99,7 +101,7 @@ useEffect(() => {
     };
 
     fetchDistanceTime();
-}, []);
+}, [ride]);
 
   useGSAP(() => {
     if (ridePopUpPanel) {

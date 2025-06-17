@@ -71,6 +71,12 @@ const AdminCaptains = () => {
                     </div>
                 </nav>
 
+                <div className='absolute top-5 right-5 z-10'>
+                    <Link to='/admin' className='flex bg-white h-10 justify-center rounded-full w-10 items-center'>
+                        <i className="text-lg font-medium ri-home-gear-line"></i>
+                    </Link>
+                </div>
+
                 {/* Search Box */}
                 <div className="flex justify-center p-4">
                     <input
@@ -86,11 +92,7 @@ const AdminCaptains = () => {
             {/* Captains List Section */}
             <div className="flex justify-center items-center w-full p-1">
                 {/* Flex container to center cards horizontally */}
-                <div className='absolute top-5 right-5 z-10'>
-                    <Link to='/admin' className='flex bg-white h-10 justify-center rounded-full w-10 items-center'>
-                        <i className="text-lg font-medium ri-home-gear-line"></i>
-                    </Link>
-                </div>
+                
                 <div className="grid w-[90%] gap-6">
                     {filteredCaptains.map((el) => (
                         <div key={el._id} className="w-full bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
